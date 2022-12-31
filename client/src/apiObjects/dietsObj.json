@@ -1,0 +1,14 @@
+{
+    "gluten free": false,
+    "ketogenic": false,
+    "vegetarian": false,
+    "lacto-Vegetarian": false,
+    "ovo-vegetarian": false,
+    "vegan": false,
+    "pescetarian": false,
+    "paleo": false,
+    "paleolithic": false,
+    "primal": false,
+    "low FODMAP": false,
+    "whole 30": false
+}

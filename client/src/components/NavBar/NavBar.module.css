@@ -1,0 +1,34 @@
+
+.wrapper {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    height: 45px;
+    background-color: #283739;
+}
+
+.wrapper > h4 {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 30px;
+    color: #a2c11c; 
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #e0e0e0;
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    background-color: #a2c11c;
+    border-radius: 5px;
+}
+
+.links:hover{
+    font-weight: bolder;
+    color: wheat
+}

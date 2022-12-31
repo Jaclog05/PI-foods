@@ -1,0 +1,52 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../images/backgroundLanding.jpeg");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.startWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+    background-color: rgba(40, 55, 57, 0);
+    width: 600px;
+    height: 200px;
+    border-radius: 130px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 40px;
+    color: #a2c11c
+
+}
+
+.button {
+    margin: 10px auto;
+    background-color: #2c5d63;
+    color:#e0e0e0;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: x-large;
+    font-family: 'Segoe UI', Tahoma;
+    font-style:italic
+}
+
+.button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    color: #e0e0e0
+}
+
+.button:active{
+    background-color: #1c3d42;
+    color: azure;
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+          box-shadow: inset 0px 0px 5px #c1c1c1;
+    outline: none;
+}

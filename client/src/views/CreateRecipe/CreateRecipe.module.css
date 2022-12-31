@@ -1,0 +1,196 @@
+
+.background {
+    background-color: #e0e0e0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.background > div {
+    width: 650px;
+}
+
+.wrapper > label, .wrapper > input{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.labelName{
+    grid-area: a;
+    color: #e0e0e0
+}
+
+.labelName > input {
+    width: 250px;
+    margin: 0 4px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #e0e0e0
+}
+
+.labelHealth{
+    grid-area: b;
+    color: #e0e0e0
+}
+
+.labelHealth > input {
+    width: 80px;
+    margin: 0 4px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #e0e0e0;
+}
+
+.labelSummarize{
+    display: flex;
+    flex-direction: column;
+    grid-area: c;
+    color: #e0e0e0
+}
+
+.labelSummarize > input {
+    width: 70%;
+    height: 60%;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #e0e0e0;
+}
+
+.labelSteps{
+    display: flex;
+    flex-direction: column;
+    grid-area: d;
+    color: #e0e0e0
+}
+
+.labelSteps > input {
+    width: 70%;
+    height: 60%;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #e0e0e0;
+}
+
+
+.wrapper {
+    border: 2px solid black;
+    display: grid;
+    grid-template-areas: "a a b"
+                         "c c c"
+                         "c c c"
+                         "d d d"
+                         "d d d"
+                         "e e e"
+                         "f f f"
+                         "f f f"
+                         "g g g";
+    border-radius: 5px;
+    background-color: #2c5d63;
+    width: 650px;
+    height: 500px;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+.middle{
+    grid-area: e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.middle > label, .diets > label {
+    color: #e0e0e0
+}
+
+.submit {
+    grid-area: g;
+    background-color: rgb(7, 147, 7);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma;
+    margin: 2px auto;
+}
+
+.submit:hover{
+    color: white;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.title {
+    background-color: #a2c11c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    border-radius: 4px 4px 0 0;
+}
+
+
+.bottom {
+    grid-area: f;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 0px;
+}
+
+.diets {
+    border: 2px solid black;
+    border-radius: 15px;
+    height: fit-content;
+}
+
+.wrapperDiets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #a2c11c;
+    text-align: left;
+    border-radius: 0 0 12px 12px;
+    height: 130px;
+}
+
+.wrapperDiets > label > input:hover{
+    cursor: pointer;
+}
+
+
+.uploadButton {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+.uploadButton:hover {
+    background-color: rgba(233, 25, 25, 0.863);
+    color: white
+}
+
+.errorForm{
+    border: 2px solid red;
+    background-color: rgb(240, 229, 76);
+}
+
+.top {
+    background-color: goldenrod;
+    width: 100%;
+}
+
+.mandatory{
+    margin: 0;
+    padding: 3px;
+    text-align: center;
+}
+

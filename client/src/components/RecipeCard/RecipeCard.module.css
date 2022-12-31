@@ -1,0 +1,72 @@
+.first-color { 
+	background: #283739; 
+}
+	
+.second-color { 
+	background: #2c5d63; 
+}
+
+.third-color { 
+	background: #a2c11c; 
+}
+
+.fourth-color { 
+	background: #e0e0e0; 
+}
+
+.wrapper {
+    border: 2px solid #283739;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 1fr 5fr 2fr;
+    border-radius: 5px;
+    background-color: #2c5d63;
+    height: 330px;
+    width: 240px;
+    margin: 5px;
+}
+
+.wrapper:hover{
+    transform: scale(1.05);
+    background-color: hsla(187, 38%, 28%, 0.6);
+}
+
+.images {
+    image-rendering: optimizeQuality;
+    border-radius: 5px;
+    padding: 2px;
+    margin: auto;
+}
+
+.upper {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    background-color: #283739;
+    border-radius: 2px 2px 0px 0px;
+    color: #e0e0e0
+}
+
+.upper > div {
+    background-color: #a2c11c;
+    color: #283739;
+    height: fit-content;
+    padding: 0px 5px;
+    border-radius: 2px 0px 0px 0px;
+}
+
+.genresDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #a2c11c;
+    color: #283739;
+    font-weight: 600;
+    width: 100%;
+    border-radius: 0 0 3px 3px;
+}
+
+.genresDiv > span {
+    margin: 0 5px
+}
+
