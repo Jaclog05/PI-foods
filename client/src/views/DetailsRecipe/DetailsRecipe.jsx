@@ -40,7 +40,7 @@ export default function DetailsRecipe({id}) {
                 </div>
             </div>
             <hr className={styles.break}/>
-            <div className={details.steps && styles.bottom}>
+            <div className={details.steps ? styles.bottom : styles.noSteps}>
                 <h4>Steps: </h4>
                 <ol className={styles.list}>
                     {details.steps && details.steps.map((step, i) => <li key={i}>{step}</li>)}

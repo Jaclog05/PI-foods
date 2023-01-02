@@ -151,3 +151,7 @@
     color: white;
     font-style: italic;
 }
+
+.hideDiv {
+    display: none
+}

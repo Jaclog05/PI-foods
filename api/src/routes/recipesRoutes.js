@@ -3,7 +3,7 @@ let express = require('express')
 let { Recipe, Diet } = require('../db')
 let axios = require('axios')
 const { Op } = require("sequelize");
-//let recipeInformationJSON = require('../replaceApiObj/recipeObj.json') 
+let recipeInformationJSON = require('../replaceApiObj/recipeObj.json') 
 
 const {
     YOUR_API_KEY
@@ -17,10 +17,10 @@ recipesRouter.get('/', async (req, res) => {
     try{
         let { name } = req.query
 
-        let response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&number=${100}&addRecipeInformation=true`)
-        let respuesta = await response.data.results
+        // let response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&number=${100}&addRecipeInformation=true`)
+        // let respuesta = await response.data.results
 
-        //let respuesta = recipeInformationJSON.results
+        let respuesta = recipeInformationJSON.results
 
         let mainData = respuesta.map(recipe => {
             return {

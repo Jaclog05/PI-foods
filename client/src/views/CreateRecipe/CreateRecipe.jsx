@@ -120,7 +120,7 @@ export default function CreateRecipe() {
     return(
         <div className={styles.background}>
           <div className={styles.title}>
-                    <h1>Add your own recipes!!</h1>
+                    <h1>Add Your Own Recipes!!</h1>
           </div>
           <form onSubmit={handleSubmit} className={styles.wrapper}>
                 <label className={styles.labelName}>Recipe Name * 

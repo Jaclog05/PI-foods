@@ -20,5 +20,8 @@ describe('Recipe routes', () => {
     it('should get 200', () =>
       agent.get('/recipes').expect(200)
     );
+    // it('should have at least 100 recipes', () =>
+    //   agent.get('/recipes').
+    // )
   });
 });

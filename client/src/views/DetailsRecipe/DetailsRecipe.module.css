@@ -150,3 +150,7 @@
     padding: 0 auto;
     color:#e0e0e0
 }
+
+.noSteps {
+    display: none;
+}
