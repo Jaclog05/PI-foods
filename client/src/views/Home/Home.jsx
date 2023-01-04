@@ -136,7 +136,8 @@ export default function Home() {
                         :
                         <h1 className={styles.noResults}>No {homeInfo.diets} recipes found</h1>
                     :
-                            recipesArray.slice(homeInfo.pageIndex, (homeInfo.pageIndex + 9)).map((m, i) => <Link key={i} to={`/recipe/${m.id}`} className={styles.links}>
+                            recipesArray.slice(homeInfo.pageIndex, (homeInfo.pageIndex + 9)).map((m, i) => (
+                                    <Link key={i} to={`/recipe/${m.id}`} className={styles.links}>
                                                     <RecipeCard 
                                                         key={i}
                                                         id={m.id}
@@ -146,8 +147,8 @@ export default function Home() {
                                                         healthScore={m.healthScore}
                                                     />
                                         </Link>
+                                    )
                             )
-                    
                     ) 
                 :
                     <h1 className={styles.noResults}>{recipesArray.message}</h1>

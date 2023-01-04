@@ -55,7 +55,7 @@ const rootReducer = (state = initialState, action) => {
     case ORDER_RECIPES_ALPHABETICALLY:
         return {
           ...state,
-          recipes: action.payload === 'a-z' ? state.recipes.sort((a, b) => {
+          recipes: action.payload === 'A - Z' ? state.recipes.sort((a, b) => {
                                                           if(a.name > b.name) return 1
                                                           if(a.name < b.name) return -1
                                                           return 0
@@ -69,7 +69,7 @@ const rootReducer = (state = initialState, action) => {
     case ORDER_RECIPES_BY_HEALTHSCORE:
         return {
           ...state,
-          recipes: action.payload === 'ascendant' ? state.recipes.sort((a, b) => a.healthScore - b.healthScore):
+          recipes: action.payload === 'Ascendant' ? state.recipes.sort((a, b) => a.healthScore - b.healthScore):
                                                             state.recipes.sort((a, b) => b.healthScore - a.healthScore) 
         }
     default:

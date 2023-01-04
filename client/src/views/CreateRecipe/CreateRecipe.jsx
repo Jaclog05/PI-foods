@@ -14,7 +14,7 @@ export default function CreateRecipe() {
     const [newRecipe, setNewRecipe] = React.useState({
       name: "",
       summarizeDish: "",
-      healthScore: "",
+      healthScore: 0,
       image: "",
       dishType: [],
       steps: [],
@@ -124,21 +124,51 @@ export default function CreateRecipe() {
           </div>
           <form onSubmit={handleSubmit} className={styles.wrapper}>
                 <label className={styles.labelName}>Recipe Name * 
-                    <input className={error.nameError && styles.errorForm} type="text" name="name" id="nameError" value={newRecipe.name} onChange={handleChange}/>
+                    <input className={error.nameError ? styles.errorForm : undefined} 
+                        type="text" 
+                        name="name" 
+                        id="nameError" 
+                        value={newRecipe.name} 
+                        onChange={handleChange}
+
+                    />
                 </label>
                 <label className={styles.labelHealth}>Health Score 
-                    <input type="number" name="healthScore" value={newRecipe.healthScore} onChange={handleChange} />
+                    <input type="number" 
+                        name="healthScore" 
+                        value={newRecipe.healthScore} 
+                        onChange={handleChange} 
+                    />
                 </label>
                 <label className={styles.labelSummarize}>Summarize * 
-                    <input className={error.summaryError && styles.errorForm} type="textarea" name="summarizeDish" id="summaryError" value={newRecipe.summarizeDish} onChange={handleChange}/>
+                    <input 
+                        className={error.summaryError ? styles.errorForm : undefined} 
+                        type="textarea" 
+                        name="summarizeDish" 
+                        id="summaryError" 
+                        value={newRecipe.summarizeDish} 
+                        onChange={handleChange}
+                    />
                 </label>
                 <label className={styles.labelSteps}>Steps
-                    <input type="textarea" step="0.01" name="steps" value={newRecipe.steps} onChange={handleChange}/>
+                    <input 
+                        type="textarea" 
+                        step="0.01" 
+                        name="steps" 
+                        value={newRecipe.steps} 
+                        onChange={handleChange}
+                    />
                 </label>
 
                 <div className={styles.middle}>
                     <label htmlFor="filesSelected">Choose a recipe image</label>
-                    <input className={styles.uploadButton} type="file" name="image" accept="image/png, image/jpeg" onChange={handleChange}></input>
+                    <input 
+                        className={styles.uploadButton} 
+                        type="file" 
+                        name="image" 
+                        accept="image/png, image/jpeg" 
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div className={styles.bottom}>
