@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import * as actions from "../../redux/actions";
 import dietsJson from '../../apiObjects/dietsObj.json'
 import dishTypesJson from '../../apiObjects/dishTypes.json'
+import axios from "axios";
 
 export default function CreateRecipe() {
 
@@ -39,15 +40,24 @@ export default function CreateRecipe() {
         })
     }, [dietsObj, dishTypesObj])
 
-   const handleChange = (e) => {
+   const handleChange = async (e) => {
         let {name, type, value, id, files} = e.target;
 
         if(type === 'file'){
                 if(files && files[0]){
-                    let img = files[0]
+                    const file = files[0];
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('upload_preset', 'lm8j6moy');
+                
+                    const CloudinaryResponse = await axios.post(
+                        'https://api.cloudinary.com/v1_1/dra7sow0c/upload',
+                        formData
+                    )
+
                     setNewRecipe({
                         ...newRecipe,
-                        image: URL.createObjectURL(img)
+                        image: CloudinaryResponse.data.secure_url
                     })
                 }
         }
@@ -96,17 +106,18 @@ export default function CreateRecipe() {
         }
     }
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault()
       if(error.nameError || error.summaryError){
          return alert("Missing Data") 
       }else{
+        
         dispatch(actions.createRecipe(newRecipe))
         setNewRecipe({
                 name: "",
                 summarizeDish: "",
                 healthScore: "",
-                image: "",
+                image:  "",
                 dishType: [],
                 steps: [],
                 dietId: []
