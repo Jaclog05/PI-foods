@@ -156,4 +156,19 @@ recipesRouter.post('/', async (req, res) => {
     }
 })
 
+recipesRouter.delete('/:recipeId', async (req, res) => {
+    let { recipeId } = req.params 
+    try{
+
+        const newRecipe = await Recipe.destroy({
+            where: { id: recipeId },
+          });
+
+        res.status(200).json(newRecipe);
+
+    }catch(e){
+        res.status(404).json({error: e.message})
+    }
+})
+
 module.exports = recipesRouter
