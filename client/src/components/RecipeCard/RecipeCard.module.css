@@ -40,7 +40,7 @@
 
 .upper {
     display: grid;
-    grid-template-columns: 1fr 9fr;
+    grid-template-columns: 1fr 9fr 1fr;
     background-color: #283739;
     border-radius: 2px 2px 0px 0px;
     color: #e0e0e0
@@ -52,6 +52,20 @@
     height: fit-content;
     padding: 0px 5px;
     border-radius: 2px 0px 0px 0px;
+}
+
+.upper > button {
+    background-color: red;
+    color: #e0e0e0;
+    height: fit-content;
+    border-radius: 0px 2px 0px 0px;
+    padding: 4px 5px;
+    border: none;
+}
+
+.upper > button:hover {
+    background-color: rgb(150, 2, 2);
+    cursor: pointer;
 }
 
 .genresDiv{
