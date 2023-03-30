@@ -8,6 +8,7 @@ export const GET_FILTERED_RECIPES = "FILTER_RECIPES"
 export const GET_RECIPES_BY_DIET = "GET_RECIPES_BY_DIET";
 export const ORDER_RECIPES_ALPHABETICALLY = "ORDER_RECIPES_ALPHABETICALLY";
 export const ORDER_RECIPES_BY_HEALTHSCORE = "ORDER_RECIPES_BY_HEALTHSCORE";
+export const DELETE_RECIPE = "DELETE_RECIPE"
 
 
 
@@ -78,3 +79,13 @@ export const createRecipe = (args) => {
     };
 }
 
+
+export const deleteRecipe = (id) => {
+
+    return dispatch => {
+        
+        return axios.delete(`http://localhost:3001/recipes/${id}`)
+            .then(json => dispatch({type: DELETE_RECIPE, payload: json}))
+            .catch(response => console.log(response))
+    };
+}

@@ -6,6 +6,7 @@ import { GET_RECIPES_BY_DIET } from './actions';
 import { ORDER_RECIPES_ALPHABETICALLY } from './actions';
 import { ORDER_RECIPES_BY_HEALTHSCORE } from './actions';
 import { GET_ALL_DIETS } from './actions'
+import { DELETE_RECIPE } from './actions'
 
 const initialState = {
   recipes: [],
@@ -71,6 +72,11 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           recipes: action.payload === 'Ascendant' ? state.recipes.sort((a, b) => a.healthScore - b.healthScore):
                                                             state.recipes.sort((a, b) => b.healthScore - a.healthScore) 
+        }
+    case DELETE_RECIPE:
+        return {
+          ...state,
+          recipes: state.recipes.filter(item => item !== action.payload)
         }
     default:
         return state
