@@ -15,6 +15,7 @@ export default function Home() {
 
     let recipesArray = useSelector(state => state.recipes)
     let recipesArrayFiltered = useSelector(state => state.filteredRecipes)
+    let recipesCopy = useSelector(state => state.recipesCopy)
 
     let [homeInfo, setHomeInfo] = React.useState({
         pageIndex: 0,
@@ -90,10 +91,15 @@ export default function Home() {
         dispatch(actions.getFilteredRecipes(homeInfo.nameToFilter))
     }
 
+    /* const handleClosing = (id) => {
+        dispatch(actions.deleteRecipe(id))
+    } */
+
     React.useEffect(() => {
         dispatch(actions.getAllRecipes())
         dispatch(actions.getAllDiets())
-    }, [dispatch])
+        console.log("recipes re-rendered")
+    }, [recipesArray.length]) //esto no lo has probado
 
     return(
         <div className={styles.body}>
@@ -145,6 +151,7 @@ export default function Home() {
                                                         image={m.image}
                                                         diet={m.diets}
                                                         healthScore={m.healthScore}
+                                                        handleClosing={typeof (m.id) !== 'number' && (() => dispatch(actions.deleteRecipe(m.id)))}
                                                     />
                                         </Link>
                                     )

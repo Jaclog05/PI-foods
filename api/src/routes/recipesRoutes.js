@@ -162,7 +162,7 @@ recipesRouter.delete('/:recipeId', async (req, res) => {
 
         const newRecipe = await Recipe.destroy({
             where: { id: recipeId },
-          });
+        });
 
         res.status(200).json(newRecipe);
 
