@@ -7,6 +7,7 @@ import { ORDER_RECIPES_ALPHABETICALLY } from './actions';
 import { ORDER_RECIPES_BY_HEALTHSCORE } from './actions';
 import { GET_ALL_DIETS } from './actions'
 import { DELETE_RECIPE } from './actions'
+import { sortByAlphabet, sortByHealthScore } from '../sortFunctions';
 
 const initialState = {
   recipes: [],
@@ -56,22 +57,12 @@ const rootReducer = (state = initialState, action) => {
     case ORDER_RECIPES_ALPHABETICALLY:
         return {
           ...state,
-          recipes: action.payload === 'A - Z' ? state.recipes.sort((a, b) => {
-                                                          if(a.name > b.name) return 1
-                                                          if(a.name < b.name) return -1
-                                                          return 0
-                                                      }) :
-                                                      state.recipes.sort((a, b) => {
-                                                          if(a.name > b.name) return -1
-                                                          if(a.name < b.name) return 1
-                                                          return 0
-                                                      })
+          recipes: sortByAlphabet(state.recipes, action.payload)
         }
     case ORDER_RECIPES_BY_HEALTHSCORE:
         return {
           ...state,
-          recipes: action.payload === 'Ascendant' ? state.recipes.sort((a, b) => a.healthScore - b.healthScore):
-                                                            state.recipes.sort((a, b) => b.healthScore - a.healthScore) 
+          recipes: sortByHealthScore(state.recipes, action.payload)
         }
     case DELETE_RECIPE:
         return {
