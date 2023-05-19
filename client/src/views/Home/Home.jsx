@@ -15,7 +15,7 @@ export default function Home() {
 
     let recipesArray = useSelector(state => state.recipes)
     let recipesArrayFiltered = useSelector(state => state.filteredRecipes)
-    let recipesCopy = useSelector(state => state.recipesCopy)
+    /* let recipesCopy = useSelector(state => state.recipesCopy) */
 
     let [homeInfo, setHomeInfo] = React.useState({
         pageIndex: 0,
@@ -95,11 +95,16 @@ export default function Home() {
         dispatch(actions.deleteRecipe(id))
     } */
 
+    //intenta hacer que se carguen las recetas y las dietas una sola vez. No cada vez que se 
+    //recargue la pagina. Mira lo del localStorage o algo.
+    
     React.useEffect(() => {
         dispatch(actions.getAllRecipes())
-        dispatch(actions.getAllDiets())
-        console.log("recipes re-rendered")
-    }, [recipesArray.length]) //esto no lo has probado
+        /* dispatch(actions.getAllDiets())
+        console.log("recipes re-rendered") */
+    }, [])
+
+
 
     return(
         <div className={styles.body}>
@@ -117,18 +122,20 @@ export default function Home() {
 
             </form>
 
-            <div className={Math.ceil(recipesArray.length / 9) ? styles.pages : styles.hideDiv}>
-                {
-                        Array.from(Array(Math.ceil(recipesArray.length / 9))).map((_, i) => {
-                            return (
-                                <button name = "pageIndex" key = {i+1} value = {i*9} onClick = {handleChange}>
-                                    {i + 1}
-                                </button>
-                            )
-                        })
-                }
-            </div>
-
+            {
+                Array.isArray(recipesArray) &&
+                    <div className={Math.ceil(recipesArray.length / 9) ? styles.pages : styles.hideDiv}>
+                        {
+                                Array.from(Array(Math.ceil(recipesArray.length / 9))).map((_, i) => {
+                                    return (
+                                        <button name = "pageIndex" key = {i+1} value = {i*9} onClick = {handleChange}>
+                                            {i + 1}
+                                        </button>
+                                    )
+                                })
+                        }
+                    </div>
+            }
             <h4 className={recipesArray.length ? styles.selectedPage : styles.hideDiv}>
                 Page {(homeInfo.pageIndex / 9) + 1} of {Math.ceil(recipesArray.length / 9)}
             </h4>
