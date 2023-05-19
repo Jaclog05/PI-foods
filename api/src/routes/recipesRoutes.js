@@ -1,39 +1,14 @@
-require('dotenv').config();
 let express = require('express')
 let { Recipe, Diet } = require('../db')
-let axios = require('axios')
 const { Op } = require("sequelize");
-
-const {
-    YOUR_API_KEY
-  } = process.env;
-
+const { getRecipes, getRecipeById } = require('../controllers')
 const recipesRouter = express.Router()
 
 recipesRouter.get('/', async (req, res) => {
 
-
     try{
+        const mainData = await getRecipes()
         let { name } = req.query
-
-        let response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&number=${100}&addRecipeInformation=true`)
-        let respuesta = await response.data.results
-
-        let mainData = respuesta.map(recipe => {
-            return {
-                id: recipe.id,
-                name: recipe.title,
-                image: recipe.image,
-                name: recipe.title,
-                dishType: recipe.dishTypes,
-                summarizeDish: recipe.summary,
-                healthScore: recipe.healthScore,
-                steps: !recipe.analyzedInstructions.length ?
-                recipe.analyzedInstructions[0] :
-                recipe.analyzedInstructions[0].steps.map(steps => `${steps.number}. ${steps.step}`),
-                diets: recipe.diets
-            }
-        })
 
         if(!name){
             let recipesOnDb = await Recipe.findAll({
@@ -51,13 +26,13 @@ recipesRouter.get('/', async (req, res) => {
             return res.status(200).json([...reverse, ...mainData])
 
         }else{
-                let filteredApi = mainData.filter(recipe => recipe.name.toLowerCase().includes(name.toLowerCase()))
-                let filteredOnDb = await Recipe.findAll({
-                    where: {
-                        name: {
-                            [Op.iLike]: `%${name}%`
-                        }
+            let filteredApi = mainData.filter(recipe => recipe.name.toLowerCase().includes(name.toLowerCase()))
+            let filteredOnDb = await Recipe.findAll({
+                where: {
+                    name: {
+                        [Op.iLike]: `%${name}%`
                     }
+                }
             });
 
             let totalFiltered = [...filteredOnDb, ...filteredApi]
@@ -76,12 +51,10 @@ recipesRouter.get('/', async (req, res) => {
 })
 
 recipesRouter.get('/:idReceta', async (req, res) => {
+
     try{
-
         let { idReceta } = req.params
-
-        if(isNaN(idReceta)){
-            
+        if(isNaN(idReceta)){  
             let clickedRecipe = await Recipe.findByPk(idReceta, {
                 include: [
                     {
@@ -94,35 +67,14 @@ recipesRouter.get('/:idReceta', async (req, res) => {
                 ]
             })
             return res.status(200).json(clickedRecipe)
-        }else{
-            
-            let response = await axios.get(`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${YOUR_API_KEY}`)
-            let respuesta = await response.data
 
-            if(!respuesta.length){
-                let mainData = {
-                    image: respuesta.image,
-                    name: respuesta.title,
-                    dishType: respuesta.dishTypes,
-                    diets: respuesta.diets,
-                    summarizeDish: respuesta.summary,
-                    healthScore: respuesta.healthScore,
-                    steps: !respuesta.analyzedInstructions.length ?
-                                respuesta.analyzedInstructions[0] :
-                                respuesta.analyzedInstructions[0].steps.map(steps => steps.step)
-
-                }
-                return res.status(200).json(mainData)
-
-            }else{
-                
-                return res.status(200).send('No matches found')
-
-            }
+        }else{   
+            const foundRecipe = await getRecipeById(idReceta)
+            return res.status(200).json(foundRecipe)
         }
 
     }catch(e){
-        return res.status(404).json(e)
+        return res.status(404).json({error: e.message})
     }
 })
 
@@ -133,7 +85,6 @@ recipesRouter.post('/', async (req, res) => {
         if(!name){
             return res.status(200).send("Please add a recipe name")
         }
-
         if(!summarizeDish){
             return res.status(200).send("Please add a recipe summary")
         }
@@ -148,7 +99,6 @@ recipesRouter.post('/', async (req, res) => {
         });
 
         await newRecipe.addDiets(dietId)
-
         res.status(200).json(newRecipe);
 
     }catch(e){
@@ -157,13 +107,12 @@ recipesRouter.post('/', async (req, res) => {
 })
 
 recipesRouter.delete('/:recipeId', async (req, res) => {
-    let { recipeId } = req.params 
-    try{
+    let { recipeId } = req.params
 
+    try{
         const newRecipe = await Recipe.destroy({
             where: { id: recipeId },
         });
-
         res.status(200).json(newRecipe);
 
     }catch(e){
