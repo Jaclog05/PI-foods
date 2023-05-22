@@ -8,6 +8,8 @@ import loading from '../../images/loading.gif'
 import dietsObj from '../../apiObjects/dietsObj.json'
 import alphabetObj from '../../apiObjects/alphabetObj.json'
 import healthScoreObj from '../../apiObjects/healthScoreObj.json'
+import Filter from '../../components/Filters/Filter'
+import Pagination from '../../components/Pagination/Pagination'
 
 export default function Home() {
     
@@ -15,7 +17,6 @@ export default function Home() {
 
     let recipesArray = useSelector(state => state.recipes)
     let recipesArrayFiltered = useSelector(state => state.filteredRecipes)
-    /* let recipesCopy = useSelector(state => state.recipesCopy) */
 
     let [homeInfo, setHomeInfo] = React.useState({
         pageIndex: 0,
@@ -25,22 +26,6 @@ export default function Home() {
         sortHealthScore: ""
     })
 
-    const filterCreator = (html, labelM, value, name, disabled, objOptions) => {
-            return (
-                <label htmlFor={html}>{labelM}:
-                                    <select 
-                                        value = {value} 
-                                        className = {value.length ? styles.optionSelected : styles.noSelectedOption} 
-                                        name = {name} 
-                                        id = {html} 
-                                        onChange = {handleFilters}
-                                    >
-                                            <option disabled={disabled} value="">--Please choose an option--</option>
-                                            {Object.keys(objOptions).map((key, i) => <option key={i} name={name} value={key}>{key}</option>)}
-                                    </select>
-                </label>
-            )
-    }
 
     const handleFilters = (e) => {
         let {name, value} = e.target
@@ -50,7 +35,6 @@ export default function Home() {
                     ...prev,
                     [name]: value
                 }))
-    
                 dispatch(actions.getRecipesByDiet(value)); break;
 
             case 'sortAlphabet' : 
@@ -59,16 +43,16 @@ export default function Home() {
                     [name]: value,
                     sortHealthScore: ""
                 }))
-    
                 dispatch(actions.orderRecipesAlpabetically(value)); break;
+
             case 'sortHealthScore' : 
                 setHomeInfo((prev) => ({
                     ...prev,
                     [name]: value,
                     sortAlphabet: ""
                 }))
-    
                 dispatch(actions.orderRecipesByHealthscore(value)); break;
+
             default :
                 dispatch(actions.getFilteredRecipes(homeInfo.nameToFilter))
         }
@@ -91,17 +75,12 @@ export default function Home() {
         dispatch(actions.getFilteredRecipes(homeInfo.nameToFilter))
     }
 
-    /* const handleClosing = (id) => {
-        dispatch(actions.deleteRecipe(id))
-    } */
 
     //intenta hacer que se carguen las recetas y las dietas una sola vez. No cada vez que se 
     //recargue la pagina. Mira lo del localStorage o algo.
     
     React.useEffect(() => {
         dispatch(actions.getAllRecipes())
-        /* dispatch(actions.getAllDiets())
-        console.log("recipes re-rendered") */
     }, [])
 
 
@@ -111,31 +90,51 @@ export default function Home() {
             <form onSubmit={handleSubmit} className={styles.searchWrapper}>
 
                         <div className={styles.searchDiv}>
-                            <input className={styles.searchInput} placeholder="Search for recipes..." type="text" name="nameToFilter" value={homeInfo.nameToFilter} onChange={handleChange}/>
+                            <input 
+                                className={styles.searchInput} 
+                                placeholder="Search for recipes..." 
+                                type="text" 
+                                name="nameToFilter" 
+                                value={homeInfo.nameToFilter} 
+                                onChange={handleChange}
+                            />
                             <input className={styles.searchButton} type="submit" value="Search"/>
                         </div>
+
                         <div className ={styles.options}>
-                            {filterCreator("diet-select", "Order by diet", homeInfo.diets, "diets", false, dietsObj)}
-                            {filterCreator("alphabet-select", "Sort alphabetically", homeInfo.sortAlphabet, "sortAlphabet", true, alphabetObj)}
-                            {filterCreator("healtScore-select", "Order by healthScore", homeInfo.sortHealthScore, "sortHealthScore", true, healthScoreObj)}
+                            <Filter 
+                                html="diet-select" 
+                                labelM="Order by diet" 
+                                value={homeInfo.diets} 
+                                name="diets" 
+                                disabled={false} 
+                                objOptions={dietsObj} 
+                                handleFilters={handleFilters}
+                            />
+                            <Filter 
+                                html="alphabet-select" 
+                                labelM="Sort alphabetically" 
+                                value={homeInfo.sortAlphabet} 
+                                name="sortAlphabet" 
+                                disabled={true} 
+                                objOptions={alphabetObj} 
+                                handleFilters={handleFilters}
+                            />
+                            <Filter 
+                                html="healtScore-select" 
+                                labelM="Order by healthScore" 
+                                value={homeInfo.sortHealthScore} 
+                                name="sortHealthScore" 
+                                disabled={true} 
+                                objOptions={healthScoreObj} 
+                                handleFilters={handleFilters}
+                            />
                         </div>
 
             </form>
 
-            {
-                Array.isArray(recipesArray) &&
-                    <div className={Math.ceil(recipesArray.length / 9) ? styles.pages : styles.hideDiv}>
-                        {
-                                Array.from(Array(Math.ceil(recipesArray.length / 9))).map((_, i) => {
-                                    return (
-                                        <button name = "pageIndex" key = {i+1} value = {i*9} onClick = {handleChange}>
-                                            {i + 1}
-                                        </button>
-                                    )
-                                })
-                        }
-                    </div>
-            }
+            { Array.isArray(recipesArray) && <Pagination recipesArray={recipesArray} handleChange={handleChange}/> }
+
             <h4 className={recipesArray.length ? styles.selectedPage : styles.hideDiv}>
                 Page {(homeInfo.pageIndex / 9) + 1} of {Math.ceil(recipesArray.length / 9)}
             </h4>
