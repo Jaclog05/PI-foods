@@ -1,0 +1,24 @@
+[
+    {
+        "gluten free": false,
+        "ketogenic": false,
+        "vegetarian": false,
+        "lacto-Vegetarian": false,
+        "ovo-vegetarian": false,
+        "vegan": false,
+        "pescetarian": false,
+        "paleo": false,
+        "paleolithic": false,
+        "primal": false,
+        "low FODMAP": false,
+        "whole 30": false
+    },
+    {
+        "A - Z": false,
+        "Z - A": false
+    },
+    {
+        "Ascendant": false,
+        "Descendant": false
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "html": "diet-select",
+        "labelM": "Order by diet",
+        "name": "diets",
+        "disabled": false
+    },
+    {
+        "html":"alphabet-select", 
+        "labelM": "Sort alphabetically", 
+        "name":"sortAlphabet", 
+        "disabled":true
+    },
+    {
+        "html":"healthScore-select", 
+        "labelM": "Order by healthScore", 
+        "name":"sortHealthScore", 
+        "disabled":true
+    }
+]
