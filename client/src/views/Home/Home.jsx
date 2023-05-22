@@ -2,14 +2,13 @@ import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as actions from '../../redux/actions'
-import RecipeCard from '../../components/RecipeCard/RecipeCard.jsx'
 import styles from './Home.module.css'
 import loading from '../../images/loading.gif'
-import dietsObj from '../../apiObjects/dietsObj.json'
-import alphabetObj from '../../apiObjects/alphabetObj.json'
-import healthScoreObj from '../../apiObjects/healthScoreObj.json'
-import Filter from '../../components/Filters/Filter'
-import Pagination from '../../components/Pagination/Pagination'
+import RecipeCard from '../../components/RecipeCard/RecipeCard.jsx'
+import Filter from '../../components/Filters/Filter.jsx'
+import Pagination from '../../components/Pagination/Pagination.jsx'
+import filtersInfo from '../../apiObjects/filtersInfo.json'
+import objOptions from '../../apiObjects/objOptions.json'
 
 export default function Home() {
     
@@ -78,6 +77,9 @@ export default function Home() {
 
     //intenta hacer que se carguen las recetas y las dietas una sola vez. No cada vez que se 
     //recargue la pagina. Mira lo del localStorage o algo.
+
+    //Ojo que las dietas no cargan en el Home. Debe ser porque borraste eso del useEffect
+    //dispatch(actions.getAllDiets())
     
     React.useEffect(() => {
         dispatch(actions.getAllRecipes())
@@ -102,33 +104,19 @@ export default function Home() {
                         </div>
 
                         <div className ={styles.options}>
-                            <Filter 
-                                html="diet-select" 
-                                labelM="Order by diet" 
-                                value={homeInfo.diets} 
-                                name="diets" 
-                                disabled={false} 
-                                objOptions={dietsObj} 
-                                handleFilters={handleFilters}
-                            />
-                            <Filter 
-                                html="alphabet-select" 
-                                labelM="Sort alphabetically" 
-                                value={homeInfo.sortAlphabet} 
-                                name="sortAlphabet" 
-                                disabled={true} 
-                                objOptions={alphabetObj} 
-                                handleFilters={handleFilters}
-                            />
-                            <Filter 
-                                html="healtScore-select" 
-                                labelM="Order by healthScore" 
-                                value={homeInfo.sortHealthScore} 
-                                name="sortHealthScore" 
-                                disabled={true} 
-                                objOptions={healthScoreObj} 
-                                handleFilters={handleFilters}
-                            />
+                            {filtersInfo.map((filter, i) => {
+                                return(
+                                    <Filter
+                                        html={filter.html}
+                                        labelM={filter.labelM}
+                                        name={filter.name}
+                                        value={homeInfo[`${filter.name}`]}
+                                        disabled={filter.disabled}
+                                        handleFilters={handleFilters}
+                                        objOptions={objOptions[i]}
+                                    />
+                                )
+                            })}
                         </div>
 
             </form>
@@ -149,7 +137,7 @@ export default function Home() {
                         <h1 className={styles.noResults}>No {homeInfo.diets} recipes found</h1>
                     :
                             recipesArray.slice(homeInfo.pageIndex, (homeInfo.pageIndex + 9)).map((m, i) => (
-                                    <Link key={i} to={`/recipe/${m.id}`} className={styles.links}>
+                                        <Link key={i} to={`/recipe/${m.id}`} className={styles.links}>
                                                     <RecipeCard 
                                                         key={i}
                                                         id={m.id}
@@ -157,7 +145,9 @@ export default function Home() {
                                                         image={m.image}
                                                         diet={m.diets}
                                                         healthScore={m.healthScore}
-                                                        handleClosing={typeof (m.id) !== 'number' && (() => dispatch(actions.deleteRecipe(m.id)))}
+                                                        handleClosing={ typeof(m.id) !== 'number' && 
+                                                                            (() => dispatch(actions.deleteRecipe(m.id)))
+                                                                      }
                                                     />
                                         </Link>
                                     )
