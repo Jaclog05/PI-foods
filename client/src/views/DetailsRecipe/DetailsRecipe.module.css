@@ -154,3 +154,14 @@
 .noSteps {
     display: none;
 }
+
+.noResults {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma;
+    height: 100vh;
+    background-color: #1c3d42;
+    width: 100%
+}
