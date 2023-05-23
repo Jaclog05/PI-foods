@@ -49,9 +49,16 @@ const getRecipes = async() => {
         let response = await axios.get(`
             ${API_DOMAIN}complexSearch?apiKey=${YOUR_API_KEY}&number=${10}&addRecipeInformation=true`
         )
-        let respuesta = await response.data.results
-        let mainData = respuesta.map(recipe => mainDataFunction(recipe))
-        return mainData
+        if(response.hasOwnProperty('status')){
+            let respuesta = await response.data.results
+            let mainData = respuesta.map(recipe => mainDataFunction(recipe))
+            return mainData
+        }else{
+            return {
+                error: response.message
+            }
+        }
+        
 }
 
 const getRecipeById = async(idReceta) => {
@@ -62,7 +69,7 @@ const getRecipeById = async(idReceta) => {
             const res = mainDataFunction(respuesta)
             return res
         }else{
-            return {error: "Recipe not found"}
+            return {error: res.message}
         }
 }
 

@@ -46,7 +46,11 @@ recipesRouter.get('/', async (req, res) => {
         }
 
     }catch(e){
-        return res.status(404).json({error: e.message})
+        if(e.response.status === 402){
+            return res.status(402).json({message: "Max requests reached. Please try Again Tomorrow"})
+        }else{
+            return res.status(404).json({message: e.message})
+        }
     }
 })
 
@@ -74,7 +78,11 @@ recipesRouter.get('/:idReceta', async (req, res) => {
         }
 
     }catch(e){
-        return res.status(404).json({error: e.message})
+        if(e.response.status === 402){
+            return res.status(402).json({message: "Max requests reached. Please try Again Tomorrow"})
+        }else{
+            return res.status(404).json({message: "Recipe not found"})
+        }
     }
 })
 
