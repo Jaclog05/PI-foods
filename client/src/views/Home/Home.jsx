@@ -15,7 +15,7 @@ export default function Home() {
     const dispatch = useDispatch()
 
     let recipesArray = useSelector(state => state.recipes)
-    let recipesArrayFiltered = useSelector(state => state.filteredRecipes)
+    /* let recipesArrayFiltered = useSelector(state => state.filteredRecipes) */
 
     let [homeInfo, setHomeInfo] = React.useState({
         pageIndex: 0,
@@ -65,13 +65,26 @@ export default function Home() {
                 [name]: name === 'nameToFilter' ? value : parseInt(value)
             }
         })
-        recipesArray = recipesArrayFiltered
+        /* recipesArray = recipesArrayFiltered */
+        if(!value.length){
+            dispatch(actions.getAllRecipes())
+        }
         
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(actions.getFilteredRecipes(homeInfo.nameToFilter))
+    }
+
+    const handleReset = () => {
+        setHomeInfo(prevState => ({
+            ...prevState,
+            nameToFilter: "",
+            diets: "",
+            sortAlphabet: "",
+            sortHealthScore: ""
+        }))
     }
 
 
@@ -119,6 +132,7 @@ export default function Home() {
                             })}
                         </div>
 
+                        <button onClick={handleReset}>Reset Filters</button>
             </form>
 
             { Array.isArray(recipesArray) && <Pagination recipesArray={recipesArray} handleChange={handleChange}/> }
@@ -154,7 +168,7 @@ export default function Home() {
                             )
                     ) 
                 :
-                    <h1 className={styles.noResults}>{recipesArray.message}</h1>
+                    <h1 className={styles.noResults}>{recipesArray.message} 😕</h1>
                 }
                 
             </div>

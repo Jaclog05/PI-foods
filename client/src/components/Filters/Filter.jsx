@@ -2,7 +2,6 @@ import React from "react";
 import styles from '../../views/Home/Home.module.css'
 
 export default function filterCreator ({html, labelM, value, name, disabled, objOptions, handleFilters}) {
-    console.log('value in filter: ', value)
     return (
         <label htmlFor={html}>{labelM}:
                             <select 
